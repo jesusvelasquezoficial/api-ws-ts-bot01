@@ -89,6 +89,10 @@ const main = async () =>{
     const provider = createProvider(BaileysProvider)
     const CLIENT_NUMBER = process.env.CLIENT_NUMBER || ''
     provider.initHttpServer(3002)
+    provider.http?.server.get('/send-msg', handleCtx(async (bot, req, res) => {
+        await bot.sendMessage(CLIENT_NUMBER, 'Este mensaje de WhatsApp viene desde API del servidor privado de Yisus.', {})
+        res.end('esto es del server de polka')
+    }))
     provider.http?.server.get('/send-message', handleCtx(async (bot, req, res) => {
         const body = req.body
         const phone = body.phone
